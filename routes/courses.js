@@ -1,48 +1,57 @@
 const { Router } = require("express");
-const course = require("../models/course");
+const courses = require("../models/courses");
+const course = require("../models/courses");
+const user = require("../models/users");
 
-router.get("/courses", (req, res) => {
-  res.json(users);
-  user.push(user);
-  res.status(200).end();
+router.get("/", (req, res) => {
+  Course.findAll()
+    .then((data) => res.status(200).json(data))
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json(error);
+    });
 });
 
 router.get("/courses/:id", (req, res) => {
-  course.findAll().then((courses) => {
-    if (course.length) {
-      res.render("course", { course });
-    } else {
-      res.status(200).end();
-    }
+  user.push(user);
+  res.status(200).end();
+}),
+  router.post("/", (req, res) => {
+    console.log(req.body);
+    Courses.create(req.body)
+      .then((course) => {
+        res.send(201).end();
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500);
+        res.json(error).end();
+      });
+  }),
+  router.put("/courses/:id", function (req, res, next) {
+    Courses.findByPk(req.params.id)
+      .then(function (course) {
+        book
+          .update(req.body)
+          .then((course) => {
+            res.send(201).end();
+          })
+          .catch((error) => {
+            res.status(500);
+            res.json(error).end();
+          });
+      })
+      .catch((error) => {
+        console.log("PK ERR: ", error);
+        next();
+      });
+  });
+
+router.delete("/courses/:id/delete", function (req, res, next) {
+  Courses.findByPk(req.params.id).then((course) => {
+    course.destroy();
+    res.status(204).end();
   });
 });
 
-router.post("/courses", (req, res) => {
-  const courses = req.body;
-  location.header = "api/courses";
-  if (!course.title) {
-    errors.push('Please provide a value for "Title" ');
-  }
-  if (!course.description) {
-    errors.push('Please provide a value for "Description" ');
-  } else {
-    res.status(200).end();
-  }
-});
-
-router.put("/courses/:id", (req, res) => {
-  if (!course.title) {
-    errors.push('Please provide a value for "Title" ');
-  }
-  if (!course.description) {
-    errors.push('Please provide a value for "Description" ');
-  } else {
-    res.status(200).end();
-  }
-});
-
-router.delete("/courses/:id/delete", (req, res) => {
-  course.findByPk(req.params.id).then((course) => {
-    course.destroy().res.status(204).end();
-  });
-});
+module.exports = router;

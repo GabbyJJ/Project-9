@@ -16,11 +16,14 @@ module.exports = (sequelize) => {
     materialsNeeded: {
       type: DataTypes.STRING,
     },
+    userId: {
+      type: DataTypes.NUMBER,
+    },
     sequelize,
     modelName: "Course",
   });
   Course.associate = (models) => {
-    Course.belongsTo(models.Course, { foreignKey: "userId" });
+    Course.belongsTo(models.Courses, { foreignKey: "userId" });
   };
-  return Course;
+  return Courses;
 };

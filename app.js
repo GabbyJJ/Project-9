@@ -22,21 +22,24 @@ app.get("/", (req, res) => {
     message: "Welcome to the REST API project!",
   });
 });
+app.use("/api/users", userRouter);
+app.use("/api/courses", courseRouter);
+
 //Place here
 sequelize.authenticate().then(() => {
   console.log("Connection has been established successfully.");
-});
+})
+.catch((error) => {
+    console.error("Unable to connect to the database:", err);
+  });
 sequelize
   .sync()
   .then(() => {
-    console.log("Databases have synced");
+    console.log(`Databases have synced`);
   })
   .catch((error) => {
-    console.log("Data Tables Synced");
+    console.log(`There was an error syncing the database: ${error}`);
   })
-  .catch((error) => {
-    console.log(error);
-  });
 // send 404 if no other route matched
 app.use((req, res) => {
   res.status(404).json({
