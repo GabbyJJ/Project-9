@@ -1,20 +1,28 @@
-const { router } = require("express");
-const bcrypt = require("bcryptjs");
-const { UniqueConstraintError } = require("sequelize");
-const { User } = require("../models");
+const express = require("express");
+const router = express.Router();
+const { Users, Courses } = require("../models");
+const { authenticateUser } = require("../middleware/auth-user");
 
-Router.get("/", (req, res) => {
-  User.findAll()
+router.get("/", authenticateUser, (req, res, next) => {
+  Users.findAll({
+    include: [
+      {
+        model: Courses,
+      },
+    ],
+  })
     .then((users) => {
       // res.status(200);
       res.json(users).end();
     })
-    .catch(error.res.status(200));
+    .catch((error) => {
+      res.status(500);
+      res.json(error).end();
+    });
 });
 
 Router.post("/", (req, res) => {
   const user = req.body;
-  console.log(user);
 
   User.create({
     firstName: user.firstName,

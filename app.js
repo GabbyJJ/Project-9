@@ -4,6 +4,8 @@
 const express = require("express");
 const morgan = require("morgan");
 const { sequelize } = require("./models/index");
+const courseRouter = require("./routes/course");
+const userRouter = require("./routes/user");
 
 // variable to enable global error logging
 const enableGlobalErrorLogging =
@@ -26,10 +28,12 @@ app.use("/api/users", userRouter);
 app.use("/api/courses", courseRouter);
 
 //Place here
-sequelize.authenticate().then(() => {
-  console.log("Connection has been established successfully.");
-})
-.catch((error) => {
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully.");
+  })
+  .catch((error) => {
     console.error("Unable to connect to the database:", err);
   });
 sequelize
@@ -39,7 +43,7 @@ sequelize
   })
   .catch((error) => {
     console.log(`There was an error syncing the database: ${error}`);
-  })
+  });
 // send 404 if no other route matched
 app.use((req, res) => {
   res.status(404).json({
