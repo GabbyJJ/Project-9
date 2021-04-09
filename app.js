@@ -16,7 +16,6 @@ const app = express();
 
 // setup morgan which gives us http request logging
 app.use(morgan("dev"));
-app.use("/api", routes);
 
 // setup a friendly greeting for the root route
 app.get("/", (req, res) => {
@@ -37,7 +36,7 @@ sequelize
     console.error("Unable to connect to the database:", err);
   });
 sequelize
-  .sync()
+  .sync({ force: true })
   .then(() => {
     console.log(`Databases have synced`);
   })

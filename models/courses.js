@@ -3,13 +3,25 @@ const { Model, DataTypes } = require("sequelize");
 const models = require("./index");
 
 module.exports = (sequelize) => {
-  class Course extends Model {}
-  Course.init({
+  class Courses extends Model {}
+  Courses.init({
     title: {
       type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "Title can not be empty",
+        },
+      },
     },
     description: {
-      type: "",
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "Description can not be empty",
+        },
+      },
     },
     estimatedTime: {
       type: DataTypes.STRING,
@@ -20,11 +32,11 @@ module.exports = (sequelize) => {
     userId: {
       type: DataTypes.NUMBER,
     },
-    sequelize,
-    modelName: "Course",
-  });
-  Course.associate = (models) => {
-    Course.belongsTo(models.Courses, { foreignKey: "userId" });
+  }),
+    { sequelize, modelName: "Courses" };
+
+  Courses.associate = (models) => {
+    Courses.belongsTo(models.Users, { foreignKey: "userId" });
   };
   return Courses;
 };

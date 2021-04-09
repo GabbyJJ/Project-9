@@ -4,7 +4,7 @@ const { Courses, Users } = require("../models");
 const { authenticateUser } = require("../middleware/auth-user");
 
 router.get("/", (req, res) => {
-  Course.findAll({
+  Courses.findAll({
     include: [
       {
         model: Users,

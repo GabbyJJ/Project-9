@@ -21,15 +21,10 @@ router.get("/", authenticateUser, (req, res, next) => {
     });
 });
 
-Router.post("/", (req, res) => {
+router.post("/", (req, res) => {
   const user = req.body;
 
-  User.create({
-    firstName: user.firstName,
-    lastName: user.lastName,
-    emailAddress: user.emailAddress,
-    password: bcrypt.hashSync(user.password, 8),
-  })
+  Users.create(req.body)
     .then((user) => {
       res.status(201).location("/");
       res.end();
