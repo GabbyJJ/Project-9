@@ -1,22 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const { Users, Courses } = require("../models");
-const { authenticateUser } = require("../middleware/auth-user");
+const { authenticateUser } = require("../middleware/auth-users");
 
 router.get("/", authenticateUser, (req, res, next) => {
-  Users.findAll({
-    include: [
-      {
-        model: Courses,
-      },
-    ],
+  Users.findOne({
+    where: { id: req.currentUser.id },
   })
-    .then((users) => {
+    .then((user) => {
       // res.status(200);
-      res.json(users).end();
+      res.json(user).end();
     })
     .catch((error) => {
-      res.status(500);
+      res.status(400);
       res.json(error).end();
     });
 });

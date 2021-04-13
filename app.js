@@ -4,7 +4,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const { sequelize } = require("./models/index");
-const courseRouter = require("./routes/course");
+const courseRouter = require("./routes/courses");
 const userRouter = require("./routes/user");
 
 // variable to enable global error logging
@@ -36,7 +36,7 @@ sequelize
     console.error("Unable to connect to the database:", err);
   });
 sequelize
-  .sync({ force: true })
+  .sync({ force: false })
   .then(() => {
     console.log(`Databases have synced`);
   })

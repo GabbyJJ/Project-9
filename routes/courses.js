@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Courses, Users } = require("../models");
-const { authenticateUser } = require("../middleware/auth-user");
+const { authenticateUser } = require("../middleware/auth-users");
 
 router.get("/", (req, res) => {
   Courses.findAll({
@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
     .then((data) => res.status(200).json(data))
     .catch((error) => {
       console.log(error);
-      res.status(500).json(error);
+      res.status(400).json(error);
     });
 });
 
@@ -32,19 +32,20 @@ router.get("/:id", (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500);
+      res.status(400);
       res.json(error).end();
     });
 });
+
 router.post("/", authenticateUser, (req, res) => {
   console.log(req.body);
   Courses.create(req.body)
     .then((course) => {
-      res.status(201).json(course).end();
+      res.status(201).Location(`/api/courses/${course.id}`);
     })
     .catch((error) => {
       console.log(error);
-      res.status(500);
+      res.status(400);
       res.json(error).end();
     });
 });
@@ -56,15 +57,15 @@ router.put("/:id", authenticateUser, function (req, res, next) {
         .update(req.body)
 
         .then((course) => {
-          res.status(201).json(course).end();
+          res.status(204).json(course).end();
         })
         .catch((error) => {
-          res.status(500);
+          res.status(400);
           res.json(error).end();
         });
     })
     .catch((error) => {
-      res.status(500);
+      res.status(400);
       res.json(error).end();
     });
 });
@@ -77,7 +78,7 @@ router.delete("/:id", authenticateUser, function (req, res, next) {
       res.status(204).end();
     })
     .catch((error) => {
-      res.status(500);
+      res.status(400);
       res.json(error).end();
     });
 });
