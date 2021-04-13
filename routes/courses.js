@@ -41,7 +41,7 @@ router.post("/", authenticateUser, (req, res) => {
   console.log(req.body);
   Courses.create(req.body)
     .then((course) => {
-      res.status(201).Location(`/api/courses/${course.id}`);
+      res.status(201).location(`/api/courses/${course.id}`).end();
     })
     .catch((error) => {
       console.log(error);

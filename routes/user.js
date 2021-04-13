@@ -22,7 +22,7 @@ router.post("/", (req, res) => {
 
   Users.create(req.body)
     .then((user) => {
-      res.status(201).location("/");
+      res.status(201).location("/").end();
       res.end();
     })
     .catch((error) => {
