@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
   Courses.findOne({
-    where: { id: req.params.id },
+    where: { id: req.currentUser.id },
     include: [
       {
         model: Users,
