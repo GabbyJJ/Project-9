@@ -25,6 +25,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/users", userRouter);
 app.use("/api/courses", courseRouter);
+app.use(express.json());
 
 //Place here
 sequelize

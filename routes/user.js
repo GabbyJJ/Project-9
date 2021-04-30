@@ -8,7 +8,7 @@ router.get("/", authenticateUser, (req, res, next) => {
     where: { id: req.currentUser.id },
   })
     .then((user) => {
-      // res.status(200);
+      res.status(200);
       res.json(user).end();
     })
     .catch((error) => {
