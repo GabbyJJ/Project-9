@@ -13,6 +13,8 @@ const enableGlobalErrorLogging =
 
 // create the Express app
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // setup morgan which gives us http request logging
 app.use(morgan("dev"));
@@ -25,7 +27,6 @@ app.get("/", (req, res) => {
 });
 app.use("/api/users", userRouter);
 app.use("/api/courses", courseRouter);
-app.use(express.json());
 
 //Place here
 sequelize

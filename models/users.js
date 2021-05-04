@@ -50,11 +50,11 @@ module.exports = (sequelize) => {
           (user.password = await bcrypt.hash(user.password, 10)),
       },
       sequelize,
-      modelName: "User",
+      modelName: "Users",
     }
   ),
     (Users.associate = (models) => {
-      Users.hasMany(models.Courses, { foreignKey: "usersId" });
+      Users.hasMany(models.Courses, { foreignKey: "userId" });
     });
   return Users;
 };

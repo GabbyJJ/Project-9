@@ -8,7 +8,7 @@ module.exports = (sequelize) => {
     {
       title: {
         type: DataTypes.STRING,
-        allowNull: false,S
+        allowNull: false,
         validate: {
           notEmpty: {
             msg: "Title can not be empty",
@@ -43,7 +43,7 @@ module.exports = (sequelize) => {
     { sequelize, modelName: "Courses" }
   ),
     (Courses.associate = (models) => {
-      Courses.belongsTo(models.Users, { foreignKey: "UsersID" });
+      Courses.belongsTo(models.Users, { foreignKey: "userID" });
     });
   return Courses;
 };
