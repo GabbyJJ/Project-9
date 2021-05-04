@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRouter);
 app.use("/api/courses", courseRouter);
 
-//Place here
+
 sequelize
   .authenticate()
   .then(() => {
@@ -45,14 +45,14 @@ sequelize
   .catch((error) => {
     console.log(`There was an error syncing the database: ${error}`);
   });
-// send 404 if no other route matched
+// this will send a 404 message if no other route matched
 app.use((req, res) => {
   res.status(404).json({
     message: "Route Not Found",
   });
 });
 
-// setup a global error handler
+// This will setup a global error handler
 app.use((err, req, res, next) => {
   if (enableGlobalErrorLogging) {
     console.error(`Global error handler: ${JSON.stringify(err.stack)}`);
@@ -64,10 +64,10 @@ app.use((err, req, res, next) => {
   });
 });
 
-// set our port
+// set the port
 app.set("port", process.env.PORT || 5000);
 
-// start listening on our port
+// start listening on the port
 const server = app.listen(app.get("port"), () => {
   console.log(`Express server is listening on port ${server.address().port}`);
 });
