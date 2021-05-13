@@ -11,7 +11,11 @@ router.get("/", (req, res) => {
       },
     ],
   })
-    .then((data) => res.status(200).json(data))
+    .then((data) => {
+      console.log(data);
+      res.status(200);
+      res.json(data);
+    })
     .catch((error) => {
       console.log(error);
       res.status(400).json(error);
@@ -20,7 +24,7 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
   Courses.findOne({
-    where: { id: req.currentUser.id },
+    where: { id: req.params.id },
     include: [
       {
         model: Users,

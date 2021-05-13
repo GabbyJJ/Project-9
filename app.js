@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const { sequelize } = require("./models/index");
 const courseRouter = require("./routes/courses");
 const userRouter = require("./routes/user");
+var cors = require("cors");
 
 // variable to enable global error logging
 const enableGlobalErrorLogging =
@@ -13,6 +14,8 @@ const enableGlobalErrorLogging =
 
 // create the Express app
 const app = express();
+app.use(cors());
+app.disable("etag");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -27,7 +30,6 @@ app.get("/", (req, res) => {
 });
 app.use("/api/users", userRouter);
 app.use("/api/courses", courseRouter);
-
 
 sequelize
   .authenticate()
