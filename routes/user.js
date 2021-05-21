@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { Users, Courses } = require("../models");
+const { User } = require("../models");
 const { authenticateUser } = require("../middleware/auth-users");
 
 router.get("/", authenticateUser, (req, res, next) => {
-  Users.findOne({
+  User.findOne({
     where: { id: req.currentUser.id },
   })
     .then((user) => {
@@ -20,9 +20,9 @@ router.get("/", authenticateUser, (req, res, next) => {
 router.post("/", (req, res) => {
   const user = req.body;
 
-  Users.create(req.body)
-    .then((user) => {
-      res.status(201).location("/").end();
+  User.create(req.body)
+    .then((userInfo) => {
+      res.status(201).json(userInfo);
       res.end();
     })
     .catch((error) => {
