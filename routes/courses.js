@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { Course } = require("../models");
+const { Course, User } = require("../models");
 const { authenticateUser } = require("../middleware/auth-users");
 
 router.get("/", (req, res) => {
   Course.findAll({
     include: [
       {
-        model: Users,
+        model: User,
       },
     ],
   })
@@ -27,7 +27,7 @@ router.get("/:id", (req, res) => {
     where: { id: req.params.id },
     include: [
       {
-        model: Users,
+        model: User,
       },
     ],
   })
@@ -45,7 +45,7 @@ router.post("/", authenticateUser, (req, res) => {
   console.log(req.body);
   Course.create(req.body)
     .then((course) => {
-      res.status(201).json(course).end();
+      res.status(201).location(`/api/courses/${course.id}`).end();
     })
     .catch((error) => {
       console.log(error);
